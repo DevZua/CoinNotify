@@ -15,7 +15,8 @@ import java.util.List;
 public class UpbitHttpClient {
     private final HttpClient httpClient;
 
-    public UpbitTickerDto getTickerByMarket(String market) throws JsonProcessingException {
+    public UpbitTickerDto getTickerByMarket(String market){
+        try {
         HttpHeaders headers = new HttpHeaders();
         headers.add("accept", "application/json");
         String execute = httpClient.execute(
@@ -30,5 +31,8 @@ public class UpbitHttpClient {
                 new TypeReference<List<UpbitTickerDto>>() {
                 }
         ).stream().findFirst().get();
+    } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
